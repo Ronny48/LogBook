@@ -8,6 +8,9 @@ dotenv.config();
 
 const app = express();
 
+// Trust proxy - necessary when behind a reverse proxy (e.g., Render, AWS ELB, Nginx)
+app.set("trust proxy", 1);
+
 // Middlewares
 // Support multiple comma-separated origins via CORS_ORIGINS env; fallback to sensible local defaults
 const corsEnv = process.env.CORS_ORIGIN || "http://localhost:5173";
