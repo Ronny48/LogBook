@@ -17,7 +17,7 @@ db.prepare(
     name TEXT NOT NULL UNIQUE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
-`
+`,
 ).run();
 
 db.prepare(
@@ -33,7 +33,7 @@ db.prepare(
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (current_destination_id) REFERENCES destinations(id)
   );
-`
+`,
 ).run();
 
 // Safe migration: add telephone column if it does not exist yet
@@ -51,28 +51,10 @@ try {
 db.prepare(
   `
   DROP TRIGGER IF EXISTS visits_updated_at;
-`
+`,
 ).run();
 
-// Useful indices for performance on common queries
-db.prepare(
-  `
-  CREATE INDEX IF NOT EXISTS idx_visits_created_at ON visits (created_at DESC);
-`
-).run();
-
-db.prepare(
-  `
-  CREATE INDEX IF NOT EXISTS idx_visits_current_destination_id ON visits (current_destination_id);
-`
-).run();
-
-db.prepare(
-  `
-  CREATE INDEX IF NOT EXISTS idx_visit_history_visit_id ON visit_history (visit_id);
-`
-).run();
-
+// Create visit_history table before indices
 db.prepare(
   `
   CREATE TABLE IF NOT EXISTS visit_history (
@@ -86,7 +68,26 @@ db.prepare(
     FOREIGN KEY (from_destination_id) REFERENCES destinations(id),
     FOREIGN KEY (to_destination_id) REFERENCES destinations(id)
   );
-`
+`,
+).run();
+
+// Useful indices for performance on common queries
+db.prepare(
+  `
+  CREATE INDEX IF NOT EXISTS idx_visits_created_at ON visits (created_at DESC);
+`,
+).run();
+
+db.prepare(
+  `
+  CREATE INDEX IF NOT EXISTS idx_visits_current_destination_id ON visits (current_destination_id);
+`,
+).run();
+
+db.prepare(
+  `
+  CREATE INDEX IF NOT EXISTS idx_visit_history_visit_id ON visit_history (visit_id);
+`,
 ).run();
 
 // Users for auth
@@ -101,7 +102,7 @@ db.prepare(
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (destination_id) REFERENCES destinations(id)
   );
-`
+`,
 ).run();
 
 // Seed an admin user if none exist (password: admin123) - dev only
@@ -113,7 +114,7 @@ try {
     const bcrypt = require("bcryptjs");
     const hash = bcrypt.hashSync("admin123", 10);
     db.prepare(
-      "INSERT INTO users (name, role, destination_id, password_hash) VALUES (?, 'admin', NULL, ?)"
+      "INSERT INTO users (name, role, destination_id, password_hash) VALUES (?, 'admin', NULL, ?)",
     ).run("Admin", hash);
   }
 } catch (_) {}
