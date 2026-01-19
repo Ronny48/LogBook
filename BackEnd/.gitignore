@@ -1,0 +1,8 @@
+.env
+mydb.sqlite
+node_modules
+
+# Database files - never commit these
+database/*.db
+database/*.db-shm
+database/*.db-wal
