@@ -5,12 +5,13 @@ export default function VisitDetailsPopup({ visitId, onClose }) {
   const [visit, setVisit] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   useEffect(() => {
     const fetchVisitDetails = async () => {
       try {
         const token = sessionStorage.getItem("token");
-        const res = await fetch(`http://localhost:3000/visits/${visitId}`, {
+        const res = await fetch(`${API_URL}/visits/${visitId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("Failed to fetch visit details");

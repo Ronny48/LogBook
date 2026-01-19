@@ -25,12 +25,13 @@ export default function OfficeVisit({ searchTerm = "", statusFilter = "" }) {
   // UNUSED: 'office' variable set but never used
   const office = localStorage.getItem("office") || "Office A";
   const [destinations, setDestinations] = useState([]);
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const fetchVisits = async () => {
     try {
       const token = sessionStorage.getItem("token");
       // Optionally add query params for status, limit, offset if needed
-      const res = await fetch(`http://localhost:3000/visits/office`, {
+      const res = await fetch(`${API_URL}/visits/office`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -42,7 +43,6 @@ export default function OfficeVisit({ searchTerm = "", statusFilter = "" }) {
     }
   };
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
   const token = sessionStorage.getItem("token");
 
   // UNUSED FUNCTION: redirectVisit() - defined but never called in component
@@ -83,7 +83,7 @@ export default function OfficeVisit({ searchTerm = "", statusFilter = "" }) {
     if (!receivedBy.trim()) return;
     try {
       const token = sessionStorage.getItem("token");
-      await fetch(`http://localhost:3000/visits/${selectedVisit.id}/receive`, {
+      await fetch(`${API_URL}/visits/${selectedVisit.id}/receive`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -135,15 +135,15 @@ export default function OfficeVisit({ searchTerm = "", statusFilter = "" }) {
   });
 
   const pendingVisits = filteredVisits.filter(
-    (visit) => visit.status === "pending"
+    (visit) => visit.status === "pending",
   );
   // UNUSED: completedVisits - filtered but never rendered in JSX
   const completedVisits = filteredVisits.filter(
-    (visit) => visit.status === "completed"
+    (visit) => visit.status === "completed",
   );
   // UNUSED: redirectedVisits - filtered but never rendered in JSX
   const redirectedVisits = filteredVisits.filter(
-    (visit) => visit.status === "redirected"
+    (visit) => visit.status === "redirected",
   );
 
   useEffect(() => {

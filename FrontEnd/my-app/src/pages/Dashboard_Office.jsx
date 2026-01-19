@@ -12,6 +12,7 @@ const Dashboard_Office = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
   const destinationId = storedUser.destination_id || null;
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
   console.log("Dashboard_Office: destinationId", destinationId);
 
   useEffect(() => {
@@ -20,10 +21,10 @@ const Dashboard_Office = () => {
         const token = sessionStorage.getItem("token");
         if (!destinationId) return;
         const res = await fetch(
-          `http://localhost:3000/stats/office?destinationId=${destinationId}`,
+          `${API_URL}/stats/office?destinationId=${destinationId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
-          }
+          },
         );
         if (!res.ok) throw new Error("Failed to load stats");
         const data = await res.json();

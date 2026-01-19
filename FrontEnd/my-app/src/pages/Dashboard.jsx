@@ -9,12 +9,13 @@ import ReceptionBtn from "../components/ReceptionBtn";
 const Dashboard = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [stats, setStats] = useState({ total: 0, pending: 0, completed: 0 });
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
         const token = sessionStorage.getItem("token");
-        const res = await fetch("http://localhost:3000/stats", {
+        const res = await fetch(`${API_URL}/stats`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("Failed to load stats");
