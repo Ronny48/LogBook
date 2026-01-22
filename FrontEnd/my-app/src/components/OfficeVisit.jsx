@@ -149,7 +149,7 @@ export default function OfficeVisit({ searchTerm = "", statusFilter = "" }) {
   useEffect(() => {
     const token = sessionStorage.getItem("token");
 
-    fetch("http://localhost:3000/destinations", {
+    fetch(`${API_URL}/destinations`, {
       headers: { Authorization: `Bearer ${token}` }, // if you protect it
     })
       .then((res) => res.json())

@@ -21,19 +21,17 @@ const LogIn = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, password }),
       });
-
+      const data = await res.json();
       if (!res.ok) {
-        const data = await res.json();
         throw new Error(data.error || "Login failed");
       }
 
-      const data = await res.json();
       sessionStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      if (data.user.role === "admin") {
+      if (data.user?.role === "admin") {
         navigate("/dashboard");
-      } else if (data.user.role === "staff") {
+      } else if (data.user?.role === "staff") {
         navigate("/dashboard_office");
       } else {
         navigate("/");

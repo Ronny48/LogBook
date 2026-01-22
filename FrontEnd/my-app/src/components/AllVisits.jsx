@@ -29,12 +29,13 @@ export default function AllVisits({ searchQuery }) {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [selectedVisitId, setSelectedVisitId] = useState(null);
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   useEffect(() => {
     const fetchVisits = async () => {
       try {
         const token = sessionStorage.getItem("token");
-        const res = await fetch("http://localhost:3000/visits", {
+        const res = await fetch(`${API_URL}/visits`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("Failed to fetch visits");

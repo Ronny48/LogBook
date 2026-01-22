@@ -7,6 +7,7 @@ const AddVisit = ({ onClose }) => {
   const [destination, setDestination] = useState("");
   const [destinations, setDestinations] = useState([]);
   const [purpose, setPurpose] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +15,7 @@ const AddVisit = ({ onClose }) => {
     try {
       const token = sessionStorage.getItem("token");
 
-      const res = await fetch("http://localhost:3000/visits", {
+      const res = await fetch(`${API_URL}/visits`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +57,7 @@ const AddVisit = ({ onClose }) => {
   useEffect(() => {
     const token = sessionStorage.getItem("token");
 
-    fetch("http://localhost:3000/destinations", {
+    fetch(`${API_URL}/destinations`, {
       headers: { Authorization: `Bearer ${token}` }, // if you protect it
     })
       .then((res) => res.json())
