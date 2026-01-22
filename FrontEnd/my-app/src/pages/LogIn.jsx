@@ -136,7 +136,7 @@ const LogIn = () => {
           <ul>
             <div className="px-2 pb-2.5">
               <p className="font-bold text-2xl">Receptionist Page</p>
-              <li>UserName: admin - Password: secret123</li>
+              <li>UserName: admin2 - Password: admin123</li>
             </div>
             <div className="px-2 pb-2.5">
               <p className="font-bold text-2xl">Office Pages</p>
