@@ -62,8 +62,8 @@ const LogIn = () => {
         className="
         w-screen h-screen
         flex items-center justify-center
-        bg-gray-100 p-4
-        md:flex-row sm:flex-row
+        bg-gray-100 p-4 md:flex sm:flex
+        md:flex-col sm:flex-col
       "
       >
         <div
