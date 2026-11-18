@@ -63,7 +63,7 @@ const LogIn = () => {
         w-screen h-screen
         flex items-center justify-center
         bg-gray-100 p-4
-        md:flex-col sm:flex-col
+        sm:flex-col
       "
       >
         <div
